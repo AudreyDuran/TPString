@@ -83,7 +83,7 @@ String::String(char* cstr)
     i++;
   }
 
-  printf("i=%d\n",i );
+  //printf("i=%d\n",i );
 
   size = i;
   capacity = size;
@@ -92,10 +92,10 @@ String::String(char* cstr)
 
   memcpy(data, cstr, size);
 
-  for (int i = 0; i < size; ++i)
+  /*for (int i = 0; i < size; ++i)
   {
     printf("%c\n", data[i] );
-  }
+  }*/
 
 }
 
