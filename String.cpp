@@ -262,7 +262,7 @@ void String::resize(size_t new_size)
 
 void String::resize(size_t new_size, char c)
 {
-  int new_s = new_size/(8*sizeof(char));
+  int new_s = new_size/(sizeof(char));
 
   if(new_s < capacity)
     {
@@ -366,7 +366,7 @@ String& String::operator+(const char* s)
     i++;
   }
 
-  //i corresponds to the size of s
+  //i corresponds to the size of s (the thing added)
 
 
   if(size+i<=capacity)
