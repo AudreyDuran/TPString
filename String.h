@@ -51,7 +51,7 @@ class String
     String(int a_size);
 
     String(const char* s, int s_size);
-
+    String (const String& str);
     
 
 

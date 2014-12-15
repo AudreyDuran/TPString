@@ -56,7 +56,7 @@ String::String(int a_size)
 }
 
 
-/*Constructor with a  */
+/*Constructor with a*/
 String::String(const char* s, int s_size)
 {
 
@@ -69,8 +69,21 @@ String::String(const char* s, int s_size)
 
   size = s_size;
   capacity = s_size;
-
 }
+
+
+// Constructor by copy
+String::String (const String& str)
+{
+  size = str.getSize();
+  capacity = size;
+  data = new char[capacity];
+  for (int i=0; i<size; i++)
+    {
+      data[i] = str.at(i);
+    }
+}
+
 
 
 String::String(char* cstr)
@@ -312,13 +325,15 @@ void String::resize(size_t new_size, char c)
 
 String& String::operator+(char c)
 {
-  
-  data[size] = c;
-  printf("%c\n", data[size] );
   size += 1;
-
+  if (capacity < size) //Allocate a new storage space if the capacity is smaller than the new size
+    {
+      delete [] data;
+      data = new char[capacity];
+    }
+  data[size] = c;
+  //printf("%c\n", data[size] );
   return *this;
-
 }
 
 
@@ -342,12 +357,15 @@ String& String::operator= (char c)
 
 String& String::operator= (const String& str)
 {
-  delete [] data;
   size = str.getSize();
-  data = new char[size];
+  if (capacity < size) //Allocate a new storage space if the capacity is smaller than the new size
+    {
+      delete [] data;
+      data = new char[size];
+    }
   for (int i=0; i<size; i++)
     {
-      data[i] = str.at(i);   // TO BE ADDRESSED !!!!
+      data[i] = str.at(i);
     }
   return *this;
 }
