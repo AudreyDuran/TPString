@@ -213,14 +213,11 @@ char& String::at(size_t position)
 //resize the String. If the new size is lower, remove the characters beyond the nth. If bigger, add (new_size - size) null characters
 void String::resize(size_t new_size)
 {
-  //int new_s = new_size/(8*sizeof(char));
 
   if(new_size < capacity)
     {
 
-      size = new_size;
-
-      for(size_t i = new_size +1; i<size; i++)
+      for(size_t i = new_size; i<size; i++)
       {
       	data[i]='\0';
       }
@@ -235,7 +232,6 @@ void String::resize(size_t new_size)
       for(size_t i=0; i<size; i++)
       {
         data2[i]=data[i];
-        printf("%c %c\n", data2[i], data[i]);
       }
 
       
@@ -250,39 +246,36 @@ void String::resize(size_t new_size)
       }
 
       data = data2; 
-      size = new_size;
+      capacity = new_size;
 
     }
-	
+
+	size = new_size;
 
 }
 
 
 void String::resize(size_t new_size, char c)
 {
-  size_t new_s = new_size/(sizeof(char));
 
-  if(new_s < capacity)
+  if(new_size < capacity)
     {
 
-      size = new_s;
-
-      for(size_t i = new_size +1; i<size; i++)
+      for(size_t i = new_size; i<size; i++)
       {
         data[i]='\0';
       }
 
     }
-  else if(new_s > capacity)
+  else if(new_size > capacity)
     {
       //create a pointer on a table of char to stock the value of data (because we are going to delete it)
-      char* data2 = new char[new_s];
+      char* data2 = new char[new_size];
 
       
       for(size_t i=0; i<size; i++)
       {
         data2[i]=data[i];
-        printf("%c %c\n", data2[i], data[i]);
       }
 
       
@@ -291,16 +284,17 @@ void String::resize(size_t new_size, char c)
       
       data= NULL;
 
-      for(size_t i=size; i<new_s; i++)
+      for(size_t i=size; i<new_size; i++)
       {
         data2[i]=c;
       }
 
       data = data2; 
-      size = new_s;
-      capacity = new_s;
+      capacity = new_size;
 
     }
+
+    size = new_size;
   
 
 }
@@ -389,12 +383,10 @@ String& String::operator+(const char* s)
     delete[] data;
     data = NULL;
 
-    printf("s2[j]\n");
 
     for(size_t j = size; j<size+i; j++)
     {
       s2[j]=s[j-size];
-      printf("%c\n",s2[j]);
     }
 
     data = s2;
