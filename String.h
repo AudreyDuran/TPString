@@ -15,7 +15,7 @@
 // ===========================================================================
 #include <cstdio>
 #include <cstdlib>
-
+#include <cstring>
 
 
 // ===========================================================================
@@ -48,9 +48,9 @@ class String
     String(void);
     String(char* cstr);
 
-    String(int a_size);
+    String(size_t a_size);
 
-    String(const char* s, int s_size);
+    String(const char* s, size_t s_size);
     String (const String& str);
     
 
@@ -63,8 +63,8 @@ class String
     // =======================================================================
     //                            Accessors: getters
     // =======================================================================
-    int getSize() const;
-    int getCapacity() const;
+    size_t getSize() const;
+    size_t getCapacity() const;
     char* getData() const;
 
 
@@ -72,7 +72,7 @@ class String
     //                            Accessors: setters
     // =======================================================================
 
-    void setCapacity(int c);
+    void setCapacity(size_t c);
     // =======================================================================
     //                                Operators
     // =======================================================================
@@ -85,8 +85,8 @@ class String
     size_t Size() const;
     size_t length() const;
     size_t max_size() const;
-    const char& at(int position) const;
-    char& at(int position);
+    const char& at(size_t position) const;
+    char& at(size_t position);
     void resize(size_t new_size);
     void resize(size_t new_size, char c);
     char* c_str();
@@ -133,10 +133,10 @@ class String
     // =======================================================================
     //                             Protected Attributes
     // =======================================================================
-    static const int MAX_SIZE;
+    static const size_t MAX_SIZE;
     char* data;
-    int size;
-    int capacity;
+    size_t size;
+    size_t capacity;
 
 };
 

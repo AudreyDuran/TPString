@@ -31,7 +31,7 @@
 // ===========================================================================
 //                         Definition of static attributes
 // ===========================================================================
-const int String::MAX_SIZE = 1000;
+const size_t String::MAX_SIZE = 1000;
 
 // ===========================================================================
 //                                  Constructors
@@ -48,7 +48,7 @@ String::String(void)
 
 
 /*Constructor with the size only in parameter */
-String::String(int a_size)
+String::String(size_t a_size)
 {
   size = a_size;
   capacity = a_size;     
@@ -63,7 +63,7 @@ String::String (const String& str)
   size = str.getSize();
   capacity = size;
   data = new char[capacity];
-  for (int i=0; i<size; i++)
+  for (size_t i=0; i<size; i++)
     {
       data[i] = str.at(i);
     }
@@ -74,7 +74,7 @@ String::String (const String& str)
 String::String(char* cstr)
 {
 
-  int i = 0;
+  size_t i = 0;
 
   while (cstr[i]!='\0')
   {
@@ -90,7 +90,7 @@ String::String(char* cstr)
 
   memcpy(data, cstr, size);
 
-  /*for (int i = 0; i < size; ++i)
+  /*for (size_t i = 0; i < size; ++i)
   {
     printf("%c\n", data[i] );
   }*/
@@ -114,7 +114,7 @@ String::~String(void)
 char* String::c_str()
 {
   char* c_data = new char[capacity+1];
-  for(int i=0; i<size; i++)
+  for(size_t i=0; i<size; i++)
   {
     c_data[i] = data[i];
   }
@@ -146,7 +146,7 @@ size_t String::Size() const
 
 
 
-int String::getSize() const
+size_t String::getSize() const
 {
   return size;
 }
@@ -155,7 +155,7 @@ int String::getSize() const
 
 
 
-int String::getCapacity() const
+size_t String::getCapacity() const
 {
   return capacity;
 }
@@ -178,7 +178,7 @@ size_t String::length() const
 }
 
 
-void String::setCapacity(int c)
+void String::setCapacity(size_t c)
 {
   capacity = c;
 
@@ -196,12 +196,12 @@ size_t String::max_size() const
 
 
 
-const char& String::at(int position) const
+const char& String::at(size_t position) const
 {
   return data[position];
 }
 
-char& String::at(int position)
+char& String::at(size_t position)
 {
   return data[position];
 }
@@ -213,26 +213,26 @@ char& String::at(int position)
 //resize the String. If the new size is lower, remove the characters beyond the nth. If bigger, add (new_size - size) null characters
 void String::resize(size_t new_size)
 {
-  int new_s = new_size/(8*sizeof(char));
+  //int new_s = new_size/(8*sizeof(char));
 
-  if(new_s < capacity)
+  if(new_size < capacity)
     {
 
-      size = new_s;
+      size = new_size;
 
-      for(int i = new_size +1; i<size; i++)
+      for(size_t i = new_size +1; i<size; i++)
       {
       	data[i]='\0';
       }
 
     }
-  else if(new_s > capacity)
+  else if(new_size > capacity)
     {
       //create a pointer on a table of char to stock the value of data (because we are going to delete it)
-      char* data2 = new char[new_s];
+      char* data2 = new char[new_size];
 
       
-      for(int i=0; i<size; i++)
+      for(size_t i=0; i<size; i++)
       {
         data2[i]=data[i];
         printf("%c %c\n", data2[i], data[i]);
@@ -244,13 +244,13 @@ void String::resize(size_t new_size)
       
       data= NULL;
 
-      for(int i=size; i<new_s; i++)
+      for(size_t i=size; i<new_size; i++)
       {
       	data2[i]='\0';
       }
 
       data = data2; 
-      size = new_s;
+      size = new_size;
 
     }
 	
@@ -260,14 +260,14 @@ void String::resize(size_t new_size)
 
 void String::resize(size_t new_size, char c)
 {
-  int new_s = new_size/(sizeof(char));
+  size_t new_s = new_size/(sizeof(char));
 
   if(new_s < capacity)
     {
 
       size = new_s;
 
-      for(int i = new_size +1; i<size; i++)
+      for(size_t i = new_size +1; i<size; i++)
       {
         data[i]='\0';
       }
@@ -279,7 +279,7 @@ void String::resize(size_t new_size, char c)
       char* data2 = new char[new_s];
 
       
-      for(int i=0; i<size; i++)
+      for(size_t i=0; i<size; i++)
       {
         data2[i]=data[i];
         printf("%c %c\n", data2[i], data[i]);
@@ -291,7 +291,7 @@ void String::resize(size_t new_size, char c)
       
       data= NULL;
 
-      for(int i=size; i<new_s; i++)
+      for(size_t i=size; i<new_s; i++)
       {
         data2[i]=c;
       }
@@ -348,7 +348,7 @@ String& String::operator= (const String& str)
       delete [] data;
       data = new char[size];
     }
-  for (int i=0; i<size; i++)
+  for (size_t i=0; i<size; i++)
     {
       data[i] = str.at(i);
     }
@@ -362,7 +362,7 @@ String& String::operator= (const String& str)
 // take a string in "" as parameter or a c_str and add it to the String
 String& String::operator+(const char* s)
 {
-  int i = 0;
+  size_t i = 0;
 
   while (s[i]!='\0')
   {
@@ -374,7 +374,7 @@ String& String::operator+(const char* s)
 
   if(size+i<=capacity)
   {
-    for(int j = size; j<size+i; j++)
+    for(size_t j = size; j<size+i; j++)
     {
       data[j]=s[j-size];
     }
@@ -391,7 +391,7 @@ String& String::operator+(const char* s)
 
     printf("s2[j]\n");
 
-    for(int j = size; j<size+i; j++)
+    for(size_t j = size; j<size+i; j++)
     {
       s2[j]=s[j-size];
       printf("%c\n",s2[j]);
@@ -416,7 +416,7 @@ String& String::operator+(const char* s)
 
 void String::print()
 {
-	for(int i=0; i<size; i++)
+	for(size_t i=0; i<size; i++)
 	  {
 	  	printf("%c", data[i]);
 	  }
