@@ -11,7 +11,7 @@
 //                                   Libraries
 // ===========================================================================
 
-#include <cstring>
+
 
 
 // ===========================================================================
@@ -189,7 +189,7 @@ This is the maximum potential length the string can reach due to known system or
 library implementation limitations*/
 size_t String::max_size() const
 {
-  return MAX_SIZE*8*sizeof(char);
+  return MAX_SIZE*sizeof(char);
 }
 
 
@@ -359,7 +359,7 @@ String& String::operator= (const String& str)
 
 
 
-// take a string in "" as parameter or a c_str
+// take a string in "" as parameter or a c_str and add it to the String
 String& String::operator+(const char* s)
 {
   int i = 0;
@@ -386,13 +386,15 @@ String& String::operator+(const char* s)
     char* s2= new char[size+i];
     memcpy(s2,data,size);
 
-    //this->print();
     delete[] data;
     data = NULL;
 
-    for(int j = i; j<size+i; j++)
+    printf("s2[j]\n");
+
+    for(int j = size; j<size+i; j++)
     {
-      s2[j]=s[j-i];
+      s2[j]=s[j-size];
+      printf("%c\n",s2[j]);
     }
 
     data = s2;
