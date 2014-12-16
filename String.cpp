@@ -374,9 +374,9 @@ String& String::operator+(const char* s)
 
   if(size+i<=capacity)
   {
-    for(int j = i; j<size+i; j++)
+    for(int j = size; j<size+i; j++)
     {
-      data[j]=s[j-i];
+      data[j]=s[j-size];
     }
 
   }
