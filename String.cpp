@@ -51,25 +51,10 @@ String::String(void)
 String::String(int a_size)
 {
   size = a_size;
-  data = new char[a_size];
-  capacity = a_size;     //to be determined
+  capacity = a_size;     
+  data = new char[capacity];
 }
 
-
-/*Constructor with a*/
-String::String(const char* s, int s_size)
-{
-
-  data = new char[s_size];
-
-  for(int i=0; i<s_size; i++)
-  {
-  	data[i] = s[i];
-  }
-
-  size = s_size;
-  capacity = s_size;
-}
 
 
 // Constructor by copy
@@ -101,7 +86,7 @@ String::String(char* cstr)
   size = i;
   capacity = size;
 
-  data = new char[size];
+  data = new char[capacity];
 
   memcpy(data, cstr, size);
 
@@ -128,7 +113,7 @@ String::~String(void)
 // Returns a pointer to an array that contains a null-terminated sequence of characters representing the current value of the string object
 char* String::c_str()
 {
-  char* c_data = new char[size+1];
+  char* c_data = new char[capacity+1];
   for(int i=0; i<size; i++)
   {
     c_data[i] = data[i];
@@ -156,7 +141,7 @@ void String::clear()
 
 size_t String::Size() const
 {
- return (size*8*sizeof(char));
+ return (size*sizeof(char));
 }
 
 
@@ -189,7 +174,7 @@ char* String::getData() const
 
 size_t String::length() const
 {
-  return size*8*sizeof(char);     
+  return size*sizeof(char);     
 }
 
 
