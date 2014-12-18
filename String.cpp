@@ -61,7 +61,7 @@ String::String(size_t a_size)
 String::String (const String& str)
 {
   size = str.getSize();
-  capacity = size;
+  capacity = str.getCapacity();
   data = new char[capacity];
   for (size_t i=0; i<size; i++)
     {
@@ -81,19 +81,12 @@ String::String(char* cstr)
     i++;
   }
 
-  //printf("i=%d\n",i );
-
   size = i;
   capacity = size;
 
   data = new char[capacity];
 
   memcpy(data, cstr, size);
-
-  /*for (size_t i = 0; i < size; ++i)
-  {
-    printf("%c\n", data[i] );
-  }*/
 
 }
 
@@ -323,8 +316,10 @@ String& String::operator+(char c)
         }
       delete [] data2;
     }
-  size += 1;
+
   data[size] = c;
+  size += 1;
+  
   return *this;
 }
 
@@ -354,6 +349,7 @@ String& String::operator= (const String& str)
     {
       delete [] data;
       data = new char[size];
+      capacity = size;
     }
   for (size_t i=0; i<size; i++)
     {
