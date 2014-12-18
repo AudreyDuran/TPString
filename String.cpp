@@ -47,7 +47,7 @@ String::String(void)
 }
 
 
-/*Constructor with the size only in parameter */
+// Constructor with the size as only parameter
 String::String(size_t a_size)
 {
   size = a_size;
@@ -57,7 +57,7 @@ String::String(size_t a_size)
 
 
 
-// Constructor by copy
+// Copy constructor
 String::String (const String& str)
 {
   size = str.getSize();
@@ -141,7 +141,7 @@ void String::clear()
 
 size_t String::Size() const
 {
- return (size*sizeof(char));
+  return (size*sizeof(char));
 }
 
 
@@ -304,14 +304,27 @@ void String::resize(size_t new_size, char c)
 
 String& String::operator+(char c)
 {
-  size += 1;
-  if (capacity < size) //Allocate a new storage space if the capacity is smaller than the new size
+
+  printf("\nExecution of OPERATOR + CHAR.\n");
+
+  if (capacity < size+1) //Allocate a new storage space if the capacity is smaller than the new size
     {
+      char* data2 = new char[capacity]; // Creation of a pointer to temporally stock the values of data
+      for(size_t i=0; i<size; i++)
+        {
+          data2[i]=data[i];
+        }
       delete [] data;
+      capacity +=1;
       data = new char[capacity];
+      for(size_t i=0; i<size; i++)
+        {
+          data[i]=data2[i];
+        }
+      delete [] data2;
     }
+  size += 1;
   data[size] = c;
-  //printf("%c\n", data[size] );
   return *this;
 }
 
@@ -408,12 +421,11 @@ String& String::operator+(const char* s)
 
 void String::print()
 {
-	for(size_t i=0; i<size; i++)
-	  {
-	  	printf("%c", data[i]);
-	  }
-
-	 printf("\n");
+  for(size_t i=0; i<size; i++)
+    {
+      printf("%c", data[i]);
+    }
+  printf("\n");
 }
 
 
