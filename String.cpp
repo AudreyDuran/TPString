@@ -70,7 +70,7 @@ String::String (const String& str)
 }
 
 
-
+// Constructor from a cstring
 String::String(char* cstr)
 {
 
@@ -131,23 +131,28 @@ void String::clear()
 
 
 
-
+// Return the size of the String
 size_t String::Size() const
 {
   return (size*sizeof(char));
 }
 
 
-
+// Return the size of the String
 size_t String::getSize() const
 {
   return size;
 }
 
 
+// Return the size of the Strin
+size_t String::length() const
+{
+  return size*sizeof(char);     
+}
 
 
-
+// Return the Capacity of the String
 size_t String::getCapacity() const
 {
   return capacity;
@@ -155,7 +160,7 @@ size_t String::getCapacity() const
 
 
 
-
+// Return the Data of the String
 char* String::getData() const
 {
   return data;
@@ -164,22 +169,17 @@ char* String::getData() const
 
 
 
-
-size_t String::length() const
-{
-  return size*sizeof(char);     
-}
-
-
+//Set the Capacity of the String (for tests)
 void String::setCapacity(size_t c)
 {
   capacity = c;
 
 }
 
-/*Returns the maximum length the string can reach.
-This is the maximum potential length the string can reach due to known system or 
-library implementation limitations*/
+
+//Returns the maximum length the string can reach.
+//This is the maximum potential length the string can reach due to known system or 
+//library implementation limitation
 size_t String::max_size() const
 {
   return MAX_SIZE*sizeof(char);
@@ -188,15 +188,35 @@ size_t String::max_size() const
 
 
 
-
+//Returns a reference to the character at position pos in the string.
+//The function automatically checks whether pos is the valid position of a character
+//in the string (i.e., whether pos is less than the string length), throwing an
+//out_of_range exception if it is not.
 const char& String::at(size_t position) const
 {
-  return data[position];
+  if(position<size)
+  {
+    return data[position];
+  }
+  else 
+  {
+      throw std::out_of_range ("Sorry, the position is bigger than the string length.");
+  }
+  
 }
 
 char& String::at(size_t position)
 {
-  return data[position];
+  if(position<size)
+  {
+    return data[position];
+  }
+  else
+  {
+   throw std::out_of_range ("Sorry, the position is bigger than the string length.");
+
+  }
+  
 }
 
 
@@ -315,7 +335,7 @@ void String::resize(size_t new_size, char c)
 
 
 
-
+//Extends the string by appending an additional character at the end of its current value.
 String& String::operator+(char c)
 {
 
@@ -345,45 +365,8 @@ String& String::operator+(char c)
 }
 
 
-
-
-
-
-String& String::operator= (char c)
-{
-  delete [] data;
-  size = 1;
-  data = new char[size];
-  data [0] = c;
-  return *this;
-}
-
-
-
-
-
-
-String& String::operator= (const String& str)
-{
-  size = str.getSize();
-  if (capacity < size) //Allocate a new storage space if the capacity is smaller than the new size
-    {
-      delete [] data;
-      data = new char[size];
-      capacity = size;
-    }
-  for (size_t i=0; i<size; i++)
-    {
-      data[i] = str.at(i);
-    }
-  return *this;
-}
-
-
-
-
-
-// take a string in "" as parameter or a c_str and add it to the String
+//Extends the string by appending a sequence, copied at the end of the string.
+// Parameter : pointer to a null-terminated sequence of characters.
 String& String::operator+(const char* s)
 {
   size_t i = 0;
@@ -429,6 +412,43 @@ String& String::operator+(const char* s)
   return *this;
 
 }
+
+
+
+//Erase the data of the String and replace it by the character in parameter.
+String& String::operator= (char c)
+{
+  delete [] data;
+  size = 1;
+  data = new char[size];
+  data [0] = c;
+  return *this;
+}
+
+
+
+
+
+
+String& String::operator= (const String& str)
+{
+  size = str.getSize();
+  if (capacity < size) //Allocate a new storage space if the capacity is smaller than the new size
+    {
+      delete [] data;
+      data = new char[size];
+      capacity = size;
+    }
+  for (size_t i=0; i<size; i++)
+    {
+      data[i] = str.at(i);
+    }
+  return *this;
+}
+
+
+
+
 
 
 

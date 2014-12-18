@@ -16,6 +16,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <stdexcept>
 
 
 // ===========================================================================
@@ -92,7 +93,6 @@ class String
     char* c_str();
     void clear();
 
-    //display the String (the data)
     void print();
 
     String& operator+(char c);
