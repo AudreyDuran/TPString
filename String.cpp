@@ -203,7 +203,11 @@ char& String::at(size_t position)
 
 
 
-//resize the String. If the new size is lower, remove the characters beyond the nth. If bigger, add (new_size - size) null characters
+//Resizes the string to a length of n characters.
+//If n is smaller than the current string length, the current value is shortened 
+//to its first n character, removing the characters beyond the nth.
+//If n is greater than the current string length, the current content is extended 
+//by inserting at the end as many characters as needed to reach a size of n (null characters)
 void String::resize(size_t new_size)
 {
 
@@ -248,18 +252,35 @@ void String::resize(size_t new_size)
 }
 
 
+
+//Resizes the string to a length of n characters.
+//If n is smaller than the current string length, the current value is shortened to its first n character, 
+//removing the characters beyond the nth.
+//If n is greater than the current string length, the current content is extended by inserting at the end 
+//as many characters as needed to reach a size of n. The new elements are initialized as copies of c.
+
 void String::resize(size_t new_size, char c)
 {
 
-  if(new_size < capacity)
+  if(new_size < capacity && new_size>size)
     {
 
-      for(size_t i = new_size; i<size; i++)
+      for(size_t i = size; i<new_size; i++)
       {
-        data[i]='\0';
+        data[i] = c;
       }
 
     }
+
+  else if(new_size < size)
+  {
+    for (size_t i = new_size; i < size; i++)
+    {
+      data[i] = '\0';
+   
+    }
+  }
+
   else if(new_size > capacity)
     {
       //create a pointer on a table of char to stock the value of data (because we are going to delete it)
@@ -414,7 +435,7 @@ String& String::operator+(const char* s)
 
 
 
-
+//display the String
 void String::print()
 {
   for(size_t i=0; i<size; i++)
