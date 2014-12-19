@@ -77,7 +77,7 @@ class String
     // =======================================================================
     //                              Public Methods
     // =======================================================================
-    size_t Size() const;
+    size_t size() const;
     size_t length() const;
     size_t max_size() const;
     size_t Capacity(void) const;

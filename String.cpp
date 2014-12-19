@@ -123,7 +123,7 @@ void String::clear()
 
 
 // Return the size of the String
-size_t String::Size() const
+size_t String::size() const
 {
   return (size_*sizeof(char));
 }

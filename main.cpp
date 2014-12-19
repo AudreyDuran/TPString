@@ -54,11 +54,11 @@ int main(int argc, char* argv[])
   String s2(s1); // Use of the copy constructor
   printf("s2 = ");
   s2.print();
-  printf("s2.size = %lu\n", s2.Size()); // size
+  printf("s2.size = %lu\n", s2.size()); // size
   s1.clear(); // clear
   printf("\nClear s1:\ns1 = ");
   s1.print();
-  printf("s1.size = %lu\n", s1.Size());
+  printf("s1.size = %lu\n", s1.size());
   printf("\ns1 = s2;\n");
   s1 = s2; // operator=(string)
   printf("s1 = ");
@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
   s1 = s1 + 'Y'; // operator+(char)
   printf("s1 = ");
   s1.print();
-  printf("s1.size = %lu\n\n\n", s1.Size());
+  printf("s1.size = %lu\n\n\n", s1.size());
   
 
 
