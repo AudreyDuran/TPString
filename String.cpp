@@ -41,7 +41,7 @@ const size_t String::MAX_SIZE = 1000;
 // Default constructor
 String::String(void)
 {
-  size = 0;
+  size_ = 0;
   data = NULL;
   capacity = 0;
 }
@@ -50,7 +50,7 @@ String::String(void)
 // Constructor with the size as only parameter
 String::String(size_t a_size)
 {
-  size = a_size;
+  size_ = a_size;
   capacity = a_size;     
   data = new char[capacity];
 }
@@ -59,10 +59,10 @@ String::String(size_t a_size)
 // Copy constructor
 String::String (const String& str)
 {
-  size = str.getSize();
+  size_ = str.getSize();
   capacity = str.getCapacity();
   data = new char[capacity];
-  for (size_t i=0; i<size; i++)
+  for (size_t i=0; i<size_; i++)
     {
       data[i] = str.at(i);
     }
@@ -77,10 +77,10 @@ String::String(char* cstr)
     {
       i++;
     }
-  size = i;
-  capacity = size;
+  size_ = i;
+  capacity = size_;
   data = new char[capacity];
-  memcpy(data, cstr, size);
+  memcpy(data, cstr, size_);
 }
 
 
@@ -103,11 +103,11 @@ String::~String(void)
 char* String::c_str()
 {
   char* c_data = new char[capacity+1];
-  for(size_t i=0; i<size; i++)
+  for(size_t i=0; i<size_; i++)
     {
       c_data[i] = data[i];
     }
-  c_data[size] = '\0';
+  c_data[size_] = '\0';
   return c_data;
 }
 
@@ -116,7 +116,7 @@ char* String::c_str()
 void String::clear()
 {
   delete[] data;
-  size = 0;
+  size_ = 0;
   capacity = 0;
   data = NULL;
 }
@@ -125,21 +125,21 @@ void String::clear()
 // Return the size of the String
 size_t String::Size() const
 {
-  return (size*sizeof(char));
+  return (size_*sizeof(char));
 }
 
 
 // Return the size of the String
 size_t String::getSize() const
 {
-  return size;
+  return size_;
 }
 
 
 // Return the size of the Strin
 size_t String::length() const
 {
-  return size*sizeof(char);     
+  return size_*sizeof(char);     
 }
 
 
@@ -186,7 +186,7 @@ size_t String::Capacity(void) const
 //out_of_range exception if it is not.
 const char& String::at(size_t position) const
 {
-  if(position<size)
+  if(position<size_)
     {
       return data[position];
     }
@@ -199,7 +199,7 @@ const char& String::at(size_t position) const
 
 char& String::at(size_t position)
 {
-  if(position<size)
+  if(position<size_)
     {
       return data[position];
     }
@@ -219,7 +219,7 @@ void String::resize(size_t new_size)
 {
   if(new_size < capacity)
     {
-      for(size_t i = new_size; i<size; i++)
+      for(size_t i = new_size; i<size_; i++)
         {
       	  data[i]='\0';
         }
@@ -228,20 +228,20 @@ void String::resize(size_t new_size)
     {
       //create a pointer on a table of char to stock the value of data (because we are going to delete it)
       char* data2 = new char[new_size];
-      for(size_t i=0; i<size; i++)
+      for(size_t i=0; i<size_; i++)
         {
           data2[i]=data[i];
         }
       delete [] data;
       data= NULL;
-      for(size_t i=size; i<new_size; i++)
+      for(size_t i=size_; i<new_size; i++)
         {
       	  data2[i]='\0';
         }
       data = data2; 
       capacity = new_size;
     }
-  size = new_size;
+  size_ = new_size;
 }
 
 
@@ -252,16 +252,16 @@ void String::resize(size_t new_size)
 //as many characters as needed to reach a size of n. The new elements are initialized as copies of c.
 void String::resize(size_t new_size, char c)
 {
-  if(new_size < capacity && new_size>size)
+  if(new_size < capacity && new_size>size_)
     {
-      for(size_t i = size; i<new_size; i++)
+      for(size_t i = size_; i<new_size; i++)
         {
           data[i] = c;
         }
     }
-  else if(new_size < size)
+  else if(new_size < size_)
     {
-      for (size_t i = new_size; i < size; i++)
+      for (size_t i = new_size; i < size_; i++)
         {
           data[i] = '\0';
         }
@@ -270,27 +270,27 @@ void String::resize(size_t new_size, char c)
     {
       //create a pointer on a table of char to stock the value of data (because we are going to delete it)
       char* data2 = new char[new_size];
-      for(size_t i=0; i<size; i++)
+      for(size_t i=0; i<size_; i++)
         {
           data2[i]=data[i];
         }
       delete [] data;
       data= NULL;
-      for(size_t i=size; i<new_size; i++)
+      for(size_t i=size_; i<new_size; i++)
         {
           data2[i]=c;
         }
       data = data2; 
       capacity = new_size;
     }
-    size = new_size;
+    size_ = new_size;
 }
 
 
 // Returns whether the string is empty (i.e. whether its length is 0).
 bool String::empty(void)
 {
-  if(size == 0)
+  if(size_ == 0)
     return true;
   else
     return false;
@@ -304,7 +304,7 @@ void String::reserve(size_t n)
   {
     char* new_data = new char[n]; // Creating a new, bigger container of size n
     size_t i;
-    for(i=0; i<size; i++)
+    for(i=0; i<size_; i++)
       new_data[i] = data[i]; // Copying old string in new container
 
     delete data; // Erasing old, smaller container
@@ -321,25 +321,24 @@ void String::reserve(size_t n)
 //Extends the string by appending an additional character at the end of its current value.
 String& String::operator+(char c)
 {
-  printf("\nExecution of OPERATOR + CHAR.\n");
-  if (capacity < size+1) //Allocate a new storage space if the capacity is smaller than the new size
+  if (capacity < size_+1) //Allocate a new storage space if the capacity is smaller than the new size
     {
       char* data2 = new char[capacity]; // Creation of a pointer to temporally stock the values of data
-      for(size_t i=0; i<size; i++)
+      for(size_t i=0; i<size_; i++)
         {
           data2[i]=data[i];
         }
       delete [] data;
       capacity +=1;
       data = new char[capacity];
-      for(size_t i=0; i<size; i++)
+      for(size_t i=0; i<size_; i++)
         {
           data[i]=data2[i];
         }
       delete [] data2;
     }
-  data[size] = c;
-  size += 1;
+  data[size_] = c;
+  size_ += 1;
   return *this;
 }
 
@@ -354,27 +353,27 @@ String& String::operator+(const char* s)
       i++;
     }
   //i corresponds to the size of s (the thing added)
-  if(size+i<=capacity)
+  if(size_+i<=capacity)
     {
-      for(size_t j = size; j<size+i; j++)
+      for(size_t j = size_; j<size_+i; j++)
         {
-          data[j]=s[j-size];
+          data[j]=s[j-size_];
         }
     }
-  else if(size+i>capacity)
+  else if(size_+i>capacity)
     {
-      char* s2= new char[size+i];
-      memcpy(s2,data,size);
+      char* s2= new char[size_+i];
+      memcpy(s2,data,size_);
       delete[] data;
       data = NULL;
-      for(size_t j = size; j<size+i; j++)
+      for(size_t j = size_; j<size_+i; j++)
         {
-          s2[j]=s[j-size];
+          s2[j]=s[j-size_];
         }
       data = s2;
     }
-  size = size + i;
-  capacity = size;
+  size_ = size_ + i;
+  capacity = size_;
   return *this;
 }
 
@@ -383,8 +382,8 @@ String& String::operator+(const char* s)
 String& String::operator= (char c)
 {
   delete [] data;
-  size = 1;
-  data = new char[size];
+  size_ = 1;
+  data = new char[size_];
   data [0] = c;
   return *this;
 }
@@ -392,14 +391,14 @@ String& String::operator= (char c)
 
 String& String::operator= (const String& str)
 {
-  size = str.getSize();
-  if (capacity < size) //Allocate a new storage space if the capacity is smaller than the new size
+  size_ = str.getSize();
+  if (capacity < size_) //Allocate a new storage space if the capacity is smaller than the new size
     {
       delete [] data;
-      data = new char[size];
-      capacity = size;
+      data = new char[size_];
+      capacity = size_;
     }
-  for (size_t i=0; i<size; i++)
+  for (size_t i=0; i<size_; i++)
     {
       data[i] = str.at(i);
     }
@@ -410,7 +409,7 @@ String& String::operator= (const String& str)
 //display the String
 void String::print()
 {
-  for(size_t i=0; i<size; i++)
+  for(size_t i=0; i<size_; i++)
     {
       printf("%c", data[i]);
     }
