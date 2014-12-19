@@ -43,7 +43,7 @@ String::String(void)
 {
   size_ = 0;
   data = NULL;
-  capacity = 0;
+  capacity_ = 0;
 }
 
 
@@ -51,8 +51,8 @@ String::String(void)
 String::String(size_t a_size)
 {
   size_ = a_size;
-  capacity = a_size;     
-  data = new char[capacity];
+  capacity_ = a_size;     
+  data = new char[capacity_];
 }
 
 
@@ -60,8 +60,8 @@ String::String(size_t a_size)
 String::String (const String& str)
 {
   size_ = str.getSize();
-  capacity = str.getCapacity();
-  data = new char[capacity];
+  capacity_ = str.getCapacity();
+  data = new char[capacity_];
   for (size_t i=0; i<size_; i++)
     {
       data[i] = str.at(i);
@@ -78,8 +78,8 @@ String::String(char* cstr)
       i++;
     }
   size_ = i;
-  capacity = size_;
-  data = new char[capacity];
+  capacity_ = size_;
+  data = new char[capacity_];
   memcpy(data, cstr, size_);
 }
 
@@ -102,7 +102,7 @@ String::~String(void)
 // Returns a pointer to an array that contains a null-terminated sequence of characters representing the current value of the string object
 char* String::c_str()
 {
-  char* c_data = new char[capacity+1];
+  char* c_data = new char[capacity_+1];
   for(size_t i=0; i<size_; i++)
     {
       c_data[i] = data[i];
@@ -117,7 +117,7 @@ void String::clear()
 {
   delete[] data;
   size_ = 0;
-  capacity = 0;
+  capacity_ = 0;
   data = NULL;
 }
 
@@ -143,10 +143,10 @@ size_t String::length() const
 }
 
 
-// Return the Capacity of the String
+// Return the capacity_ of the String
 size_t String::getCapacity() const
 {
-  return capacity;
+  return capacity_;
 }
 
 
@@ -160,7 +160,7 @@ char* String::getData(void) const
 //Set the Capacity of the String (for tests)
 void String::setCapacity(size_t c)
 {
-  capacity = c;
+  capacity_ = c;
 }
 
 
@@ -176,7 +176,7 @@ size_t String::max_size(void) const
 //Return size of allocated storage
 size_t String::Capacity(void) const
 {
-  return capacity;
+  return capacity_;
 }
 
 
@@ -217,14 +217,14 @@ char& String::at(size_t position)
 //by inserting at the end as many characters as needed to reach a size of n (null characters)
 void String::resize(size_t new_size)
 {
-  if(new_size < capacity)
+  if(new_size < capacity_)
     {
       for(size_t i = new_size; i<size_; i++)
         {
       	  data[i]='\0';
         }
     }
-  else if(new_size > capacity)
+  else if(new_size > capacity_)
     {
       //create a pointer on a table of char to stock the value of data (because we are going to delete it)
       char* data2 = new char[new_size];
@@ -239,7 +239,7 @@ void String::resize(size_t new_size)
       	  data2[i]='\0';
         }
       data = data2; 
-      capacity = new_size;
+      capacity_ = new_size;
     }
   size_ = new_size;
 }
@@ -252,7 +252,7 @@ void String::resize(size_t new_size)
 //as many characters as needed to reach a size of n. The new elements are initialized as copies of c.
 void String::resize(size_t new_size, char c)
 {
-  if(new_size < capacity && new_size>size_)
+  if(new_size < capacity_ && new_size>size_)
     {
       for(size_t i = size_; i<new_size; i++)
         {
@@ -266,7 +266,7 @@ void String::resize(size_t new_size, char c)
           data[i] = '\0';
         }
     }
-  else if(new_size > capacity)
+  else if(new_size > capacity_)
     {
       //create a pointer on a table of char to stock the value of data (because we are going to delete it)
       char* data2 = new char[new_size];
@@ -281,7 +281,7 @@ void String::resize(size_t new_size, char c)
           data2[i]=c;
         }
       data = data2; 
-      capacity = new_size;
+      capacity_ = new_size;
     }
     size_ = new_size;
 }
@@ -300,7 +300,7 @@ bool String::empty(void)
 //Requests that the string capacity be adapted to a planned change in size to a length of up to n characters.
 void String::reserve(size_t n)
 {
-  if (n > capacity)
+  if (n > capacity_)
   {
     char* new_data = new char[n]; // Creating a new, bigger container of size n
     size_t i;
@@ -309,7 +309,7 @@ void String::reserve(size_t n)
 
     delete data; // Erasing old, smaller container
     data = new_data; // Updating
-    capacity = n;    // the attributes
+    capacity_ = n;    // the attributes
   }
 
   // For the case n < capacity, I chose not to shrink the capacity, leaving it greater than n.
@@ -321,16 +321,16 @@ void String::reserve(size_t n)
 //Extends the string by appending an additional character at the end of its current value.
 String& String::operator+(char c)
 {
-  if (capacity < size_+1) //Allocate a new storage space if the capacity is smaller than the new size
+  if (capacity_ < size_+1) //Allocate a new storage space if the capacity is smaller than the new size
     {
-      char* data2 = new char[capacity]; // Creation of a pointer to temporally stock the values of data
+      char* data2 = new char[capacity_]; // Creation of a pointer to temporally stock the values of data
       for(size_t i=0; i<size_; i++)
         {
           data2[i]=data[i];
         }
       delete [] data;
-      capacity +=1;
-      data = new char[capacity];
+      capacity_ +=1;
+      data = new char[capacity_];
       for(size_t i=0; i<size_; i++)
         {
           data[i]=data2[i];
@@ -353,14 +353,14 @@ String& String::operator+(const char* s)
       i++;
     }
   //i corresponds to the size of s (the thing added)
-  if(size_+i<=capacity)
+  if(size_+i<=capacity_)
     {
       for(size_t j = size_; j<size_+i; j++)
         {
           data[j]=s[j-size_];
         }
     }
-  else if(size_+i>capacity)
+  else if(size_+i>capacity_)
     {
       char* s2= new char[size_+i];
       memcpy(s2,data,size_);
@@ -373,7 +373,7 @@ String& String::operator+(const char* s)
       data = s2;
     }
   size_ = size_ + i;
-  capacity = size_;
+  capacity_ = size_;
   return *this;
 }
 
@@ -392,11 +392,11 @@ String& String::operator= (char c)
 String& String::operator= (const String& str)
 {
   size_ = str.getSize();
-  if (capacity < size_) //Allocate a new storage space if the capacity is smaller than the new size
+  if (capacity_ < size_) //Allocate a new storage space if the capacity is smaller than the new size
     {
       delete [] data;
       data = new char[size_];
-      capacity = size_;
+      capacity_ = size_;
     }
   for (size_t i=0; i<size_; i++)
     {

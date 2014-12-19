@@ -131,7 +131,7 @@ class String
     static const size_t MAX_SIZE;
     char* data;
     size_t size_;
-    size_t capacity;
+    size_t capacity_;
 };
 
 
