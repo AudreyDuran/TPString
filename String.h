@@ -93,8 +93,8 @@ class String
     void resize(size_t new_size, char c);
     char* c_str();
     void clear();
-
     void print();
+    bool empty(void);
 
     String& operator+(char c);
     String& operator+(const char* s);

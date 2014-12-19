@@ -149,11 +149,21 @@ int main(int argc, char* argv[])
   str2[3] = 'p';
   str2[4] = 'y';
   str2[5] = '!';
-
   String s(str2);
 
-   // Test of method capacity
-  printf("\nTest of Capacity():\n s.Capacity() = %lu \n", s.Capacity());
+  char* str3 = new char[6];
+  String empty_string(str3);
+
+  
+  printf("s = Yuppy!\n");
+
+   // Test of method Capacity()
+  printf("\nTest of Capacity():\ns.Capacity() = %lu \n", s.Capacity());
+
+  // Test of method empty()
+  printf("\nTest of empty():\ns.empty() = %s \n", s.empty()?"true":"false");
+  printf("empty_string.empty() = %s \n", empty_string.empty()?"true":"false");
+
 
 
   printf("\nMain executed without problem.\n");

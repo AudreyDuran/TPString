@@ -342,6 +342,16 @@ void String::resize(size_t new_size, char c)
 }
 
 
+// Returns whether the string is empty (i.e. whether its length is 0).
+bool String::empty(void)
+{
+  if(size == 0)
+    return true;
+  else
+    return false;
+}
+
+
 
 //Extends the string by appending an additional character at the end of its current value.
 String& String::operator+(char c)
