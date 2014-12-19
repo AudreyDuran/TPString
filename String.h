@@ -80,7 +80,7 @@ class String
     size_t size() const;
     size_t length() const;
     size_t max_size() const;
-    size_t Capacity(void) const;
+    size_t capacity(void) const;
     const char& at(size_t position) const;
     char& at(size_t position);
     void resize(size_t new_size);

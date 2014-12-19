@@ -174,7 +174,7 @@ size_t String::max_size(void) const
 
 
 //Return size of allocated storage
-size_t String::Capacity(void) const
+size_t String::capacity(void) const
 {
   return capacity_;
 }

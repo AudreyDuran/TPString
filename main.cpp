@@ -158,7 +158,7 @@ int main(int argc, char* argv[])
   printf("s = Yuppy!\n");
 
    // Test of method Capacity()
-  printf("\nTest of Capacity():\ns.Capacity() = %lu \n", s.Capacity());
+  printf("\nTest of Capacity():\ns.Capacity() = %lu \n", s.capacity());
 
   // Test of method empty()
   printf("\nTest of empty():\ns.empty() = %s \n", s.empty()?"true":"false");
@@ -166,12 +166,12 @@ int main(int argc, char* argv[])
 
   // Test of method reserve(size_t n)
   size_t n = 10;
-  printf("\nTest of reserve:\nOld capacity = %lu \n", s.Capacity());
+  printf("\nTest of reserve:\nOld capacity = %lu \n", s.capacity());
   s.reserve(n);
-  printf("New capacity for n=10 : %lu \n", s.Capacity());
+  printf("New capacity for n=10 : %lu \n", s.capacity());
   n = 2;
   s.reserve(n);
-  printf("New capacity for n=2 : %lu \n", s.Capacity());
+  printf("New capacity for n=2 : %lu \n", s.capacity());
 
 
 
