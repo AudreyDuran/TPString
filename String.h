@@ -48,13 +48,9 @@ class String
     // =======================================================================
     String(void);
     String(char* cstr);
-
     String(size_t a_size);
-
     String(const char* s, size_t s_size);
     String (const String& str);
-    
-
 
     // =======================================================================
     //                                Destructor
@@ -81,8 +77,6 @@ class String
     // =======================================================================
     //                              Public Methods
     // =======================================================================
-
-
     size_t Size() const;
     size_t length() const;
     size_t max_size() const;
@@ -96,7 +90,6 @@ class String
     void print();
     bool empty(void);
     void reserve(size_t n);
-
     String& operator+(char c);
     String& operator+(const char* s);
     String& operator= (char c);
@@ -139,7 +132,6 @@ class String
     char* data;
     size_t size;
     size_t capacity;
-
 };
 
 
