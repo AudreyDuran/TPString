@@ -353,6 +353,28 @@ bool String::empty(void)
 
 
 
+
+//Requests that the string capacity be adapted to a planned change in size to a length of up to n characters.
+void String::reserve(size_t n)
+{
+  if (n > capacity)
+  {
+    char* new_data = new char[n]; // Creating a new, bigger container of size n
+    size_t i;
+    for(i=0; i<size; i++)
+      new_data[i] = data[i]; // Copying old string in new container
+
+    delete data; // Erasing old, smaller container
+    data = new_data; // Updating
+    capacity = n;    // the attributes
+  }
+
+  // For the case n < capacity, I chose not to shrink the capacity, leaving it greater than n.
+
+}
+
+
+
 //Extends the string by appending an additional character at the end of its current value.
 String& String::operator+(char c)
 {

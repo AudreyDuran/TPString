@@ -164,6 +164,15 @@ int main(int argc, char* argv[])
   printf("\nTest of empty():\ns.empty() = %s \n", s.empty()?"true":"false");
   printf("empty_string.empty() = %s \n", empty_string.empty()?"true":"false");
 
+  // Test of method reserve(size_t n)
+  size_t n = 10;
+  printf("\nTest of reserve:\nOld capacity = %lu \n", s.Capacity());
+  s.reserve(n);
+  printf("New capacity for n=10 : %lu \n", s.Capacity());
+  n = 2;
+  s.reserve(n);
+  printf("New capacity for n=2 : %lu \n", s.Capacity());
+
 
 
   printf("\nMain executed without problem.\n");

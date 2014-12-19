@@ -95,6 +95,7 @@ class String
     void clear();
     void print();
     bool empty(void);
+    void reserve(size_t n);
 
     String& operator+(char c);
     String& operator+(const char* s);
