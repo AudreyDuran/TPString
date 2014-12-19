@@ -161,7 +161,7 @@ size_t String::getCapacity() const
 
 
 // Return the Data of the String
-char* String::getData() const
+char* String::getData(void) const
 {
   return data;
 }
@@ -180,10 +180,18 @@ void String::setCapacity(size_t c)
 //Returns the maximum length the string can reach.
 //This is the maximum potential length the string can reach due to known system or 
 //library implementation limitation
-size_t String::max_size() const
+size_t String::max_size(void) const
 {
   return MAX_SIZE*sizeof(char);
 }
+
+
+//Return size of allocated storage
+size_t String::Capacity(void) const
+{
+  return capacity;
+}
+
 
 
 

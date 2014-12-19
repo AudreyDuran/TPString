@@ -138,11 +138,27 @@ int main(int argc, char* argv[])
 
 
 
+//Test of methodes written by student 3
+   printf("\n-------------\n");
+   printf("Student 3 :D\n");
+
+  char* str2 = new char[6];
+  str2[0] = 'Y';
+  str2[1] = 'u';
+  str2[2] = 'p';
+  str2[3] = 'p';
+  str2[4] = 'y';
+  str2[5] = '!';
+
+  String s(str2);
+
+   // Test of method capacity
+  printf("\nTest of Capacity():\n s.Capacity() = %lu \n", s.Capacity());
+
+
   printf("\nMain executed without problem.\n");
   return 0;
 }
-
-
 
 // ===========================================================================
 //                         Define Miscellaneous Functions
