@@ -70,13 +70,22 @@ class String
     // =======================================================================
 
     void setCapacity(size_t c);
+
     // =======================================================================
     //                                Operators
     // =======================================================================
+    
+    String& operator+(char c);
+    String& operator+(const String& str);
+    String& operator+(const char* s);
+    String& operator= (char c);
+    String& operator= (const String& str);
+    String& operator= (const char* s);
 
     // =======================================================================
     //                              Public Methods
     // =======================================================================
+    
     size_t size(void) const;
     size_t length(void) const;
     size_t max_size(void) const;
@@ -90,11 +99,8 @@ class String
     void print(void);
     bool empty(void);
     void reserve(size_t n);
-    String& operator+(char c);
-    String& operator+(const char* s);
-    String& operator= (char c);
-    String& operator= (const String& str);
-    String& operator= (const char* s);
+
+
 
     // =======================================================================
     //                             Public Attributes

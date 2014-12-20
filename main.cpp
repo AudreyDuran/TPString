@@ -158,15 +158,24 @@ int main(int argc, char* argv[])
   str4[0] = 'H';
   str4[1] = 'i';
   String st(str4);
-  
+
+  char* str5 = new char[3];
+    str5[0] = '!';
+    str5[1] = '!';
+    str5[2] = '!';
+  String another_s(str5);
+
   printf("s = Yuppy!\n");
+
 
    // Test of method Capacity()
   printf("\nTest of Capacity():\ns.Capacity() = %lu \n", s.capacity());
 
+
   // Test of method empty()
   printf("\nTest of empty():\ns.empty() = %s \n", s.empty()?"true":"false");
   printf("empty_string.empty() = %s \n", empty_string.empty()?"true":"false");
+
 
   // Test of method reserve(size_t n)
   size_t n = 10;
@@ -178,7 +187,7 @@ int main(int argc, char* argv[])
   printf("New capacity for n=2 : %lu \n", s.capacity());
 
 
-  // Test of operator= (const string* s)
+  // Test of operator= (const String* s)
   s = "Short";
   printf("\nTest of operator= for shorter new_string\nString s = ");
   s.print();
@@ -186,6 +195,11 @@ int main(int argc, char* argv[])
   printf("Test of operator= for longer new_string\nString s = ");
   s.print();
 
+
+  // Test of operator+ (const String& str)
+  String ss1 = st + another_s;
+  printf("\nTest of operator+\nHi + !!! = ");
+  ss1.print();
 
 
 

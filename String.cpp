@@ -341,6 +341,23 @@ String& String::operator+(char c)
 }
 
 
+// Takes the reference to a string as parameter and adds its associated string to the original string.
+String& String::operator+(const String& str)
+{
+  size_t str_size = str.getSize(); 
+  size_t new_size = size_ + str_size; // Finding new value of size
+  size_t old_size = size_; // Storing value of old size
+  size_ = new_size; // Changing the size into the new one / Making space for the extra characters
+  reserve(new_size); // Changing the capacity so there is enough memory for the new string
+
+  for (size_t i=old_size; i<new_size; i++)
+      data[i] = str.at(i-old_size);
+    
+  return *this;
+}
+
+
+
 //Extends the string by appending a sequence, copied at the end of the string.
 // Parameter : pointer to a null-terminated sequence of characters.
 String& String::operator+(const char* s)
@@ -375,12 +392,6 @@ String& String::operator+(const char* s)
   return *this;
 }
 
-/*
-String& String::operator+(const String& str)
-{
-
-}
-*/
 
 
 //Erase the data of the String and replace it by the character in parameter.
@@ -444,6 +455,7 @@ void String::print(void)
     }
   printf("\n");
 }
+
 
 
 
