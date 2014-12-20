@@ -60,9 +60,9 @@ class String
     // =======================================================================
     //                            Accessors: getters
     // =======================================================================
-    size_t getSize() const;
-    size_t getCapacity() const;
-    char* getData() const;
+    size_t getSize(void) const;
+    size_t getCapacity(void) const;
+    char* getData(void) const;
 
 
     // =======================================================================
@@ -77,23 +77,24 @@ class String
     // =======================================================================
     //                              Public Methods
     // =======================================================================
-    size_t size() const;
-    size_t length() const;
-    size_t max_size() const;
+    size_t size(void) const;
+    size_t length(void) const;
+    size_t max_size(void) const;
     size_t capacity(void) const;
     const char& at(size_t position) const;
     char& at(size_t position);
     void resize(size_t new_size);
     void resize(size_t new_size, char c);
-    char* c_str();
-    void clear();
-    void print();
+    char* c_str(void);
+    void clear(void);
+    void print(void);
     bool empty(void);
     void reserve(size_t n);
     String& operator+(char c);
     String& operator+(const char* s);
     String& operator= (char c);
     String& operator= (const String& str);
+    String& operator= (const char* s);
 
     // =======================================================================
     //                             Public Attributes

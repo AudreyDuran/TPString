@@ -139,7 +139,7 @@ int main(int argc, char* argv[])
 
 
 //Test of methodes written by student 3
-   printf("\n-------------\n");
+   printf("\n\n-------------\n");
    printf("Student 3 :D\n");
 
   char* str2 = new char[6];
@@ -154,6 +154,10 @@ int main(int argc, char* argv[])
   char* str3 = new char[6];
   String empty_string(str3);
 
+  char* str4 = new char[2];
+  str4[0] = 'H';
+  str4[1] = 'i';
+  String st(str4);
   
   printf("s = Yuppy!\n");
 
@@ -172,6 +176,16 @@ int main(int argc, char* argv[])
   n = 2;
   s.reserve(n);
   printf("New capacity for n=2 : %lu \n", s.capacity());
+
+
+  // Test of operator= (const string* s)
+  s = "Short";
+  printf("\nTest of operator= for shorter new_string\nString s = ");
+  s.print();
+  s = "Supersuperlong";
+  printf("Test of operator= for longer new_string\nString s = ");
+  s.print();
+
 
 
 

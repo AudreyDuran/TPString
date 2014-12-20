@@ -303,11 +303,9 @@ void String::reserve(size_t n)
   if (n > capacity_)
   {
     char* new_data = new char[n]; // Creating a new, bigger container of size n
-    size_t i;
-    for(i=0; i<size_; i++)
-      new_data[i] = data[i]; // Copying old string in new container
-
+    memcpy(new_data, data, size_); // Copying old string in new container
     delete data; // Erasing old, smaller container
+
     data = new_data; // Updating
     capacity_ = n;    // the attributes
   }
@@ -352,7 +350,7 @@ String& String::operator+(const char* s)
     {
       i++;
     }
-  //i corresponds to the size of s (the thing added)
+  //i corresponds to the size of s (the added thing)
   if(size_+i<=capacity_)
     {
       for(size_t j = size_; j<size_+i; j++)
@@ -376,6 +374,13 @@ String& String::operator+(const char* s)
   capacity_ = size_;
   return *this;
 }
+
+/*
+String& String::operator+(const String& str)
+{
+
+}
+*/
 
 
 //Erase the data of the String and replace it by the character in parameter.
@@ -406,8 +411,32 @@ String& String::operator= (const String& str)
 }
 
 
+
+
+// Takes a pointer to a null-terminated sequence of characters as parameter 
+// and replaces the current contents of the string with the pointed sequence
+String& String::operator= (const char* s)
+{
+  size_t new_size = 0;
+
+  while (s[new_size]!='\0')
+      new_size++; // Gets the size of the string pointed by s
+
+  reserve(new_size); // Allocates space for new_string IF its size is > than the current capacity and moves old string in new container
+  for(size_t i = 0; i<new_size; i++)
+    data[i]=s[i]; // Copies new_string over old one
+
+  size_ = new_size;
+  capacity_ = size_;
+ 
+  return *this;
+}
+  
+
+
+
 //display the String
-void String::print()
+void String::print(void)
 {
   for(size_t i=0; i<size_; i++)
     {
