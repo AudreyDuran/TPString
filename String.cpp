@@ -87,6 +87,7 @@ String::String(char* cstr)
 // ===========================================================================
 //                                  Destructor
 // ===========================================================================
+
 String::~String(void)
 {
   delete [] data;
@@ -100,7 +101,7 @@ String::~String(void)
 
 
 // Returns a pointer to an array that contains a null-terminated sequence of characters representing the current value of the string object
-char* String::c_str()
+char* String::c_str(void)
 {
   char* c_data = new char[capacity_+1];
   for(size_t i=0; i<size_; i++)
@@ -113,7 +114,7 @@ char* String::c_str()
 
 
 // Erases the contents of the string, which becomes an empty string with a length of 0 characters)
-void String::clear()
+void String::clear(void)
 {
   delete[] data;
   size_ = 0;
@@ -123,28 +124,28 @@ void String::clear()
 
 
 // Return the size of the String
-size_t String::size() const
+size_t String::size(void) const
 {
   return (size_*sizeof(char));
 }
 
 
 // Return the size of the String
-size_t String::getSize() const
+size_t String::getSize(void) const
 {
   return size_;
 }
 
 
 // Return the size of the Strin
-size_t String::length() const
+size_t String::length(void) const
 {
   return size_*sizeof(char);     
 }
 
 
 // Return the capacity_ of the String
-size_t String::getCapacity() const
+size_t String::getCapacity(void) const
 {
   return capacity_;
 }
@@ -173,7 +174,7 @@ size_t String::max_size(void) const
 }
 
 
-//Return size of allocated storage
+// Return size of allocated storage
 size_t String::capacity(void) const
 {
   return capacity_;
@@ -287,6 +288,19 @@ void String::resize(size_t new_size, char c)
 }
 
 
+
+// Displays the String
+void String::print(void)
+{
+  for(size_t i=0; i<size_; i++)
+    {
+      printf("%c", data[i]);
+    }
+  printf("\n");
+}
+
+
+
 // Returns whether the string is empty (i.e. whether its length is 0).
 bool String::empty(void)
 {
@@ -304,7 +318,7 @@ void String::reserve(size_t n)
   {
     char* new_data = new char[n]; // Creating a new, bigger container of size n
     memcpy(new_data, data, size_); // Copying old string in new container
-    delete data; // Erasing old, smaller container
+    delete [] data; // Erasing old, smaller container
 
     data = new_data; // Updating
     capacity_ = n;    // the attributes
@@ -314,6 +328,10 @@ void String::reserve(size_t n)
 
 }
 
+
+//---------------------------------------------------------------------------
+//                                OPERATORS
+//---------------------------------------------------------------------------
 
 
 //Extends the string by appending an additional character at the end of its current value.
@@ -444,17 +462,27 @@ String& String::operator= (const char* s)
 }
   
 
-
-
-//display the String
-void String::print(void)
+// Returns a reference to the character at position pos in the string.
+char& String::operator[] (size_t pos)
 {
-  for(size_t i=0; i<size_; i++)
-    {
-      printf("%c", data[i]);
-    }
-  printf("\n");
+  if (pos > size_) 
+    printf("Error: position greater than length\n");
+
+  return data[pos];
 }
+
+
+// Returns a const reference to the character at position pos in the const string.
+const char& String::operator[] (size_t pos) const
+{
+  if (pos > size_) 
+    printf("Error: position greater than length\n");
+
+  return data[pos];
+}
+
+
+
 
 
 

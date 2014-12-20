@@ -81,6 +81,10 @@ class String
     String& operator= (char c);
     String& operator= (const String& str);
     String& operator= (const char* s);
+    char& operator[] (size_t pos);
+    const char& operator[] (size_t pos) const;
+
+
 
     // =======================================================================
     //                              Public Methods
@@ -99,7 +103,6 @@ class String
     void print(void);
     bool empty(void);
     void reserve(size_t n);
-
 
 
     // =======================================================================

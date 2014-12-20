@@ -202,8 +202,19 @@ int main(int argc, char* argv[])
   ss1.print();
 
 
+  // Test of operator[] (size_t pos)
+  printf("\nTest of operator[]\nFor the string 'Hi!!!', the second character is '%c'\n", ss1[1]);
+  printf("This should give nothng = %c\n", ss1[5]);
+  printf("This should give an error = ");
+  ss1[10];
 
-  printf("\nMain executed without problem.\n");
+  // Test of operator[] (size_t pos) const
+  const String const_string(str2);
+  printf("\nThis should give me p = %c\n", const_string[2]);
+
+
+
+  printf("\n\nMain executed without problem.\n");
   return 0;
 }
 
