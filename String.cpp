@@ -39,12 +39,16 @@ String::String(void)
 }
 
 
-// Constructor with the size as only parameter
-String::String(size_t a_size)
+// Constructor with the capacity as only parameter
+String::String(size_t a_capacity)
 {
-  size_ = a_size;
-  capacity_ = a_size;     
-  data = new char[capacity_];
+  if(a_capacity<= MAX_SIZE)
+  {
+    size_ = 0;
+    capacity_ = a_capacity;     
+    data = new char[capacity_];
+  }
+  
 }
 
 
@@ -69,10 +73,19 @@ String::String(char* cstr)
     {
       i++;
     }
-  size_ = i;
-  capacity_ = size_;
-  data = new char[capacity_];
-  memcpy(data, cstr, size_);
+
+  if(i<=MAX_SIZE)
+    {
+      size_ = i;
+      capacity_ = size_;
+      data = new char[capacity_];
+      memcpy(data, cstr, size_);
+    }
+  else
+  {
+    printf("Your cstr is too long, bigger than MAX_SIZE = %lu\n", MAX_SIZE);
+  }
+  
 }
 
 
@@ -210,7 +223,9 @@ size_t String::max_size(void) const
 
 void String::resize(size_t new_size)
 {
-  if(new_size < capacity_)
+  if (new_size <= MAX_SIZE)
+  {
+    if(new_size < capacity_)
     {
       for(size_t i = new_size; i<size_; i++)
         {
@@ -235,6 +250,14 @@ void String::resize(size_t new_size)
       capacity_ = new_size;
     }
   size_ = new_size;
+
+  }
+
+  else 
+  {
+    printf("The new size you choosed is bigger than MAX_SIZE = %lu \n", MAX_SIZE);
+  }
+  
 }
 
 
@@ -246,7 +269,10 @@ void String::resize(size_t new_size)
 
 void String::resize(size_t new_size, char c)
 {
-  if(new_size < capacity_ && new_size>size_)
+  if (new_size <= MAX_SIZE)
+  {
+
+     if(new_size < capacity_ && new_size>size_)
     {
       for(size_t i = size_; i<new_size; i++)
         {
@@ -278,6 +304,14 @@ void String::resize(size_t new_size, char c)
       capacity_ = new_size;
     }
     size_ = new_size;
+  
+  }
+
+  else
+  {
+    printf("The new size you choosed is bigger than MAX_SIZE = %lu \n", MAX_SIZE);
+  }
+ 
 }
 
 
@@ -419,28 +453,40 @@ String& String::operator+(const char* s)
       i++;
     }
   //i corresponds to the size of s (the added thing)
-  if(size_+i<=capacity_)
-    {
-      for(size_t j = size_; j<size_+i; j++)
-        {
-          data[j]=s[j-size_];
-        }
-    }
-  else if(size_+i>capacity_)
-    {
-      char* s2= new char[size_+i];
-      memcpy(s2,data,size_);
-      delete[] data;
-      data = NULL;
-      for(size_t j = size_; j<size_+i; j++)
-        {
-          s2[j]=s[j-size_];
-        }
-      data = s2;
-    }
-  size_ = size_ + i;
-  capacity_ = size_;
-  return *this;
+
+  if (size_+i<=MAX_SIZE)
+  {
+
+    if(size_+i<=capacity_)
+     {
+        for(size_t j = size_; j<size_+i; j++)
+          {
+            data[j]=s[j-size_];
+         }
+      }
+    else if(size_+i>capacity_)
+      {
+       char* s2= new char[size_+i];
+        memcpy(s2,data,size_);
+       delete[] data;
+       data = NULL;
+       for(size_t j = size_; j<size_+i; j++)
+         {
+            s2[j]=s[j-size_];
+         }
+        data = s2;
+       }
+    size_ = size_ + i;
+    capacity_ = size_;
+    return *this;
+  }
+
+  else
+  {
+    printf("Your String would be bigger than MAX_SIZE = %lu\n", MAX_SIZE);
+    return *this;
+  }
+
 }
 
 
@@ -448,10 +494,19 @@ String& String::operator+(const char* s)
 //Erase the data of the String and replace it by the character in parameter.
 String& String::operator= (char c)
 {
-  delete [] data;
-  size_ = 1;
-  data = new char[size_];
-  data [0] = c;
+  if (MAX_SIZE !=0)
+  {
+    delete [] data;
+    size_ = 1;
+    data = new char[size_];
+    data [0] = c;
+  }
+
+  else
+  {
+    printf("error : MAX_SIZE is null.\n");
+  }
+  
   return *this;
 }
 
