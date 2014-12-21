@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
   //Test of the operator +(char*)
   printf("\nTest of the operator +(char*) \n");
   s3 + "t works !";
-  printf("s3 = ");
+  printf("s3 + 't works !' : s3 = ");
   s3.print();
 
 
@@ -158,7 +158,7 @@ int main(int argc, char* argv[])
   printf("s = Yuppy!\n");
 
 
-   // Test of method Capacity()
+   // Test of method capacity()
   printf("\nTest of Capacity():\ns.Capacity() = %lu \n", s.capacity());
 
 
