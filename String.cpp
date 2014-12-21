@@ -92,47 +92,14 @@ String::~String(void)
 // ===========================================================================
 
 
-// Returns a pointer to an array that contains a null-terminated sequence of characters representing the current value of the string object
-char* String::c_str(void)
-{
-  char* c_data = new char[capacity_+1];
-  for(size_t i=0; i<size_; i++)
-    {
-      c_data[i] = data[i];
-    }
-  c_data[size_] = '\0';
-  return c_data;
-}
-
-
-// Erases the contents of the string, which becomes an empty string with a length of 0 characters)
-void String::clear(void)
-{
-  delete[] data;
-  size_ = 0;
-  capacity_ = 0;
-  data = NULL;
-}
-
-
-// Return the size of the String
-size_t String::size(void) const
-{
-  return (size_*sizeof(char));
-}
-
+//----------------------------------------------------------------------------
+//                                  Getters
+//----------------------------------------------------------------------------
 
 // Return the size of the String
 size_t String::getSize(void) const
 {
   return size_;
-}
-
-
-// Return the size of the Strin
-size_t String::length(void) const
-{
-  return size_*sizeof(char);     
 }
 
 
@@ -150,12 +117,88 @@ char* String::getData(void) const
 }
 
 
+//----------------------------------------------------------------------------
+//                                  Setters
+//----------------------------------------------------------------------------
+
 //Set the Capacity of the String (for tests)
 void String::setCapacity(size_t c)
 {
   capacity_ = c;
 }
 
+
+//----------------------------------------------------------------------------
+//                                  print
+//----------------------------------------------------------------------------
+
+// Displays the String
+void String::print(void)
+{
+  for(size_t i=0; i<size_; i++)
+    {
+      printf("%c", data[i]);
+    }
+  printf("\n");
+}
+
+
+//----------------------------------------------------------------------------
+//                                  c_str
+//----------------------------------------------------------------------------
+
+// Returns a pointer to an array that contains a null-terminated sequence of characters representing the current value of the string object
+char* String::c_str(void)
+{
+  char* c_data = new char[capacity_+1];
+  for(size_t i=0; i<size_; i++)
+    {
+      c_data[i] = data[i];
+    }
+  c_data[size_] = '\0';
+  return c_data;
+}
+
+
+//----------------------------------------------------------------------------
+//                                  size
+//----------------------------------------------------------------------------
+
+// Return the size of the String
+size_t String::size(void) const
+{
+  return (size_*sizeof(char));
+}
+
+
+//----------------------------------------------------------------------------
+//                                  length
+//----------------------------------------------------------------------------
+
+// Return the size of the String
+size_t String::length(void) const
+{
+  return size_*sizeof(char);     
+}
+
+
+//----------------------------------------------------------------------------
+//                                  clear
+//----------------------------------------------------------------------------
+
+// Erases the contents of the string, which becomes an empty string with a length of 0 characters)
+void String::clear(void)
+{
+  delete[] data;
+  size_ = 0;
+  capacity_ = 0;
+  data = NULL;
+}
+
+
+//----------------------------------------------------------------------------
+//                                  max_size
+//----------------------------------------------------------------------------
 
 //Returns the maximum length the string can reach.
 //This is the maximum potential length the string can reach due to known system or 
@@ -166,55 +209,23 @@ size_t String::max_size(void) const
 }
 
 
-// Return size of allocated storage
-size_t String::capacity(void) const
-{
-  return capacity_;
-}
-
-
-//Returns a reference to the character at position pos in the string.
-//The function automatically checks whether pos is the valid position of a character
-//in the string (i.e., whether pos is less than the string length), throwing an
-//out_of_range exception if it is not.
-const char& String::at(size_t position) const
-{
-  if(position<size_)
-    {
-      return data[position];
-    }
-  else 
-    {
-      throw std::out_of_range ("Sorry, the position is bigger than the string length.");
-    }
-}
-
-
-char& String::at(size_t position)
-{
-  if(position<size_)
-    {
-      return data[position];
-    }
-  else
-    {
-     throw std::out_of_range ("Sorry, the position is bigger than the string length.");
-    }
-}
-
+//----------------------------------------------------------------------------
+//                                  resize
+//----------------------------------------------------------------------------
 
 //Resizes the string to a length of n characters.
 //If n is smaller than the current string length, the current value is shortened 
 //to its first n character, removing the characters beyond the nth.
 //If n is greater than the current string length, the current content is extended 
 //by inserting at the end as many characters as needed to reach a size of n (null characters)
+
 void String::resize(size_t new_size)
 {
   if(new_size < capacity_)
     {
       for(size_t i = new_size; i<size_; i++)
         {
-      	  data[i]='\0';
+          data[i]='\0';
         }
     }
   else if(new_size > capacity_)
@@ -229,7 +240,7 @@ void String::resize(size_t new_size)
       data= NULL;
       for(size_t i=size_; i<new_size; i++)
         {
-      	  data2[i]='\0';
+          data2[i]='\0';
         }
       data = data2; 
       capacity_ = new_size;
@@ -243,6 +254,7 @@ void String::resize(size_t new_size)
 //removing the characters beyond the nth.
 //If n is greater than the current string length, the current content is extended by inserting at the end 
 //as many characters as needed to reach a size of n. The new elements are initialized as copies of c.
+
 void String::resize(size_t new_size, char c)
 {
   if(new_size < capacity_ && new_size>size_)
@@ -280,18 +292,54 @@ void String::resize(size_t new_size, char c)
 }
 
 
+//----------------------------------------------------------------------------
+//                                    at
+//----------------------------------------------------------------------------
 
-// Displays the String
-void String::print(void)
+//Returns a reference to the character at position pos in the string.
+//The function automatically checks whether pos is the valid position of a character
+//in the string (i.e., whether pos is less than the string length), throwing an
+//out_of_range exception if it is not.
+const char& String::at(size_t position) const
 {
-  for(size_t i=0; i<size_; i++)
+  if(position<size_)
     {
-      printf("%c", data[i]);
+      return data[position];
     }
-  printf("\n");
+  else 
+    {
+      throw std::out_of_range ("Sorry, the position is bigger than the string length.");
+    }
 }
 
 
+char& String::at(size_t position)
+{
+  if(position<size_)
+    {
+      return data[position];
+    }
+  else
+    {
+     throw std::out_of_range ("Sorry, the position is bigger than the string length.");
+    }
+}
+
+
+//----------------------------------------------------------------------------
+//                                  capacity
+//----------------------------------------------------------------------------
+
+// Return size of allocated storage
+size_t String::capacity(void) const
+{
+  return capacity_;
+}
+
+
+//----------------------------------------------------------------------------
+//                                  empty
+//----------------------------------------------------------------------------
 
 // Returns whether the string is empty (i.e. whether its length is 0).
 bool String::empty(void)
@@ -302,6 +350,10 @@ bool String::empty(void)
     return false;
 }
 
+
+//----------------------------------------------------------------------------
+//                                  reserve
+//----------------------------------------------------------------------------
 
 //Requests that the string capacity be adapted to a planned change in size to a length of up to n characters.
 void String::reserve(size_t n)
