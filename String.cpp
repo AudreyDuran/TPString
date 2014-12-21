@@ -408,24 +408,29 @@ void String::reserve(size_t n)
 //Extends the string by appending an additional character at the end of its current value.
 String& String::operator+(char c)
 {
-  if (capacity_ < size_+1) //Allocate a new storage space if the capacity is smaller than the new size
-    {
-      char* data2 = new char[capacity_]; // Creation of a pointer to temporally stock the values of data
-      for(size_t i=0; i<size_; i++)
-        {
-          data2[i]=data[i];
-        }
-      delete [] data;
-      capacity_ +=1;
-      data = new char[capacity_];
-      for(size_t i=0; i<size_; i++)
-        {
-          data[i]=data2[i];
-        }
-      delete [] data2;
-    }
-  data[size_] = c;
-  size_ += 1;
+  if (size_+1 <= MAX_SIZE) 
+  {
+    if (capacity_ < size_+1) //Allocate a new storage space if the capacity is smaller than the new size
+     {
+        char* data2 = new char[capacity_]; // Creation of a pointer to temporally stock the values of data
+        for(size_t i=0; i<size_; i++)
+          {
+           data2[i]=data[i];
+          }
+        delete [] data;
+        capacity_ +=1;
+        data = new char[capacity_];
+        for(size_t i=0; i<size_; i++)
+          {
+           data[i]=data2[i];
+          }
+       delete [] data2;
+      }
+    data[size_] = c;
+    size_ += 1;
+  } else
+    printf("\nError: string size bigger than MAX_SIZE.\n");
+
   return *this;
 }
 
@@ -523,16 +528,22 @@ String& String::operator= (char c)
 String& String::operator= (const String& str)
 {
   size_ = str.getSize();
-  if (capacity_ < size_) //Allocate a new storage space if the capacity is smaller than the new size
+  if(size_ <= MAX_SIZE) 
     {
-      delete [] data;
-      data = new char[size_];
-      capacity_ = size_;
-    }
-  for (size_t i=0; i<size_; i++)
-    {
-      data[i] = str.at(i);
-    }
+
+    if (capacity_ < size_) //Allocate a new storage space if the capacity is smaller than the new size
+      {
+        delete [] data;
+        data = new char[size_];
+        capacity_ = size_;
+      }
+    for (size_t i=0; i<size_; i++)
+      {
+        data[i] = str.at(i);
+      }
+    } else
+      printf("\nError: string size bigger than MAX_SIZE.\n");
+
   return *this;
 }
 
