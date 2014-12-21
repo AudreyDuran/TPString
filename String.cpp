@@ -383,12 +383,16 @@ void String::reserve(size_t n)
 {
   if (n > capacity_)
   {
-    char* new_data = new char[n]; // Creating a new, bigger container of size n
-    memcpy(new_data, data, size_); // Copying old string in new container
-    delete [] data; // Erasing old, smaller container
+    if (n <= MAX_SIZE) 
+    {
+      char* new_data = new char[n]; // Creating a new, bigger container of size n
+      memcpy(new_data, data, size_); // Copying old string in new container
+      delete [] data; // Erasing old, smaller container
 
-    data = new_data; // Updating
-    capacity_ = n;    // the attributes
+      data = new_data; // Updating
+      capacity_ = n;    // the attributes
+    } else
+    printf("\nWarning: the chosen capacity is bigger than MAX_SIZE.\n");
   }
 
   // For the case n < capacity, I chose not to shrink the capacity, leaving it greater than n.
@@ -431,12 +435,17 @@ String& String::operator+(const String& str)
 {
   size_t str_size = str.getSize(); 
   size_t new_size = size_ + str_size; // Finding new value of size
-  size_t old_size = size_; // Storing value of old size
-  size_ = new_size; // Changing the size into the new one / Making space for the extra characters
-  reserve(new_size); // Changing the capacity so there is enough memory for the new string
 
-  for (size_t i=old_size; i<new_size; i++)
+  if (new_size <= MAX_SIZE)
+  {
+    size_t old_size = size_; // Storing value of old size
+    size_ = new_size; // Changing the size into the new one / Making space for the extra characters
+    reserve(new_size); // Changing the capacity so there is enough memory for the new string
+
+    for (size_t i=old_size; i<new_size; i++)
       data[i] = str.at(i-old_size);
+  } else
+    printf("\nError: string size bigger than MAX_SIZE.\n");
     
   return *this;
 }
@@ -539,12 +548,16 @@ String& String::operator= (const char* s)
   while (s[new_size]!='\0')
       new_size++; // Gets the size of the string pointed by s
 
+if (new_size <= MAX_SIZE)
+  {
   reserve(new_size); // Allocates space for new_string IF its size is > than the current capacity and moves old string in new container
   for(size_t i = 0; i<new_size; i++)
     data[i]=s[i]; // Copies new_string over old one
 
   size_ = new_size;
   capacity_ = size_;
+  } else
+    printf("\nError: string size bigger than MAX_SIZE.\n");
  
   return *this;
 }
